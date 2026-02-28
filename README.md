@@ -48,10 +48,14 @@ python3 scripts/tv_youtube.py search "Adele Hello"
 |---------|-------------|
 | `play <video_id>` | Play a specific YouTube video |
 | `search "query"` | Search YouTube and play first result |
+| `playlist "q1,q2,q3"` | Queue multiple videos (IDs or search queries) |
+| `next` | Next track |
+| `prev` | Previous track |
 | `pause` | Pause playback |
 | `resume` | Resume playback |
 | `skip` | Skip current ad |
 | `volume <0-100>` | Set TV volume |
+| `now` | Show now playing info |
 | `renew` | Renew Lounge token |
 
 ## For Python

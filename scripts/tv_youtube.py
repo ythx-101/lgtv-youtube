@@ -127,6 +127,47 @@ async def run(args):
                 print("❌ No results")
                 return
 
+        elif cmd == "playlist":
+            # Accept comma-separated video IDs or search queries
+            items = [s.strip() for s in args.target.split(",")]
+            video_ids = []
+            titles = []
+            for item in items:
+                if re.match(r'^[A-Za-z0-9_-]{11}$', item):
+                    video_ids.append(item)
+                    titles.append(item)
+                else:
+                    vid, title = search_youtube(item)
+                    if vid:
+                        video_ids.append(vid)
+                        titles.append(title)
+                    else:
+                        print(f"⚠ Skipped (no results): {item}")
+            if not video_ids:
+                print("❌ No videos found")
+                return
+            await api._command("setPlaylist", {
+                "videoId": video_ids[0],
+                "videoIds": ",".join(video_ids),
+                "currentIndex": "0",
+                "count": str(len(video_ids)),
+            })
+            for i, t in enumerate(titles):
+                prefix = "▶" if i == 0 else " "
+                print(f"{prefix} {i+1}. {t}")
+
+        elif cmd == "next":
+            await api.next()
+            print("⏭ Next")
+
+        elif cmd == "prev":
+            await api.previous()
+            print("⏮ Previous")
+
+        elif cmd == "now":
+            info = await api.get_now_playing()
+            print(json.dumps(info, indent=2, default=str))
+
         elif cmd == "pause":
             await api.pause()
             print("⏸ Paused")
@@ -154,8 +195,8 @@ async def run(args):
 
 def main():
     parser = argparse.ArgumentParser(description="LG TV YouTube Remote")
-    parser.add_argument("command", choices=["play", "search", "pause", "resume", "skip", "volume", "renew"])
-    parser.add_argument("target", nargs="?", help="Video ID, search query, or volume level")
+    parser.add_argument("command", choices=["play", "search", "playlist", "pause", "resume", "skip", "next", "prev", "volume", "renew", "now"])
+    parser.add_argument("target", nargs="?", help="Video ID, search query, volume level, or comma-separated video IDs for playlist")
     parser.add_argument("--auth", default=DEFAULT_AUTH, help="Auth JSON file path")
     parser.add_argument("--tv-ip", help="TV IP (for renew command)")
     args = parser.parse_args()

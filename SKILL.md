@@ -34,10 +34,14 @@ python3 scripts/tv_youtube.py search "邓紫棋 光年之外"
 |---------|-------------|
 | `play <video_id>` | Play a specific YouTube video |
 | `search "query"` | Search YouTube and play first result |
+| `playlist "q1,q2,q3"` | Queue multiple videos (IDs or search queries, comma-separated) |
+| `next` | Next track |
+| `prev` | Previous track |
 | `pause` | Pause playback |
 | `resume` | Resume playback |
 | `skip` | Skip current ad |
 | `volume <0-100>` | Set volume |
+| `now` | Show now playing info |
 | `renew` | Renew Lounge token |
 
 ## How It Works
