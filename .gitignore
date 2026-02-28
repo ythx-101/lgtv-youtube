@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+*.pyo
+ytlounge-auth.json
+.env
+*.log
