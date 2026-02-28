@@ -4,3 +4,7 @@ __pycache__/
 ytlounge-auth.json
 .env
 *.log
+data/youtube-cookies.txt
+data/history-cache.json
+data/history-*.json
+data/history-*.csv
