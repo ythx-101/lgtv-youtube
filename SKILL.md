@@ -1,6 +1,6 @@
 ---
 name: lgtv-youtube
-description: "Remote YouTube control for LG webOS TVs — play/search/pause/skip ads/volume/watch history, without touching the remote. Bypasses the 'select account' interruption. Uses Netflix DIAL screenId leak for auto-pairing. Use when: (1) controlling YouTube on an LG TV, (2) playing music/videos remotely, (3) viewing YouTube watch history, (4) searching/exporting watch history, (5) setting up ad-free YouTube via Developer Mode."
+description: "Remote YouTube control for LG webOS TVs — play/search/pause/skip ads/volume, without touching the remote. Bypasses the 'select account' interruption. Uses Netflix DIAL screenId leak for auto-pairing. Use when: (1) controlling YouTube on an LG TV, (2) playing music/videos remotely, (3) setting up ad-free YouTube via Developer Mode."
 ---
 
 # LG TV YouTube Remote Control
@@ -75,44 +75,8 @@ POST https://www.youtube.com/api/lounge/pairing/get_lounge_token_batch
 
 For ad-free YouTube via youtube-webos, see [references/developer-mode.md](references/developer-mode.md).
 
-## Watch History
-
-View, search, and export your YouTube watch history. Requires YouTube cookies (one-time setup).
-
-### Cookie Setup
-
-1. Install **EditThisCookie V3** Chrome extension
-2. Open `youtube.com` (make sure you're logged in)
-3. Click the EditThisCookie icon → click the export button (5th from left)
-4. Send the exported text to your agent
-
-```bash
-# Import cookies (EditThisCookie JSON auto-converts to Netscape)
-python3 scripts/yt_history.py import cookies.json
-
-# Import from stdin (agent pipes text directly)
-echo '<cookie text>' | python3 scripts/yt_history.py import -
-
-# Check if cookies are valid
-python3 scripts/yt_history.py check
-```
-
-Cookies are stored at `data/youtube-cookies.txt`. They stay there until you delete them.
-
-### History Commands
-
-```bash
-python3 scripts/yt_history.py show            # Recent 20 videos
-python3 scripts/yt_history.py show 50          # Recent 50 videos
-python3 scripts/yt_history.py search "keyword" # Search history
-python3 scripts/yt_history.py export json      # Export to JSON
-python3 scripts/yt_history.py export csv       # Export to CSV
-python3 scripts/yt_history.py show --no-cache  # Force refresh (skip 5-min cache)
-```
-
 ## Troubleshooting
 
 - **"Not linked" error**: Token expired. Run `python3 scripts/tv_youtube.py renew`
 - **No sound**: TV screen may be off (energy saver). Video still plays — send any SSAP command to wake
 - **DIAL port 36866 not responding**: TV may be in deep sleep. Wake via Wake-on-LAN or SSAP first
-- **"Cookies expired"**: Re-export from EditThisCookie and re-import

@@ -58,44 +58,6 @@ python3 scripts/tv_youtube.py search "Adele Hello"
 | `now` | Show now playing info |
 | `renew` | Renew Lounge token |
 
-## Watch History
-
-View, search, and export your YouTube watch history. Requires a one-time cookie import.
-
-### Setup
-
-1. Install **[EditThisCookie V3](https://chromewebstore.google.com/detail/editthiscookie-v3)** in Chrome
-2. Open `youtube.com` (logged in)
-3. Click EditThisCookie icon → export (5th button from left)
-4. Save or send to your agent
-
-```bash
-# Import cookies
-python3 scripts/yt_history.py import cookies.json
-
-# Or pipe from stdin
-cat cookies.json | python3 scripts/yt_history.py import -
-```
-
-### History Commands
-
-| Command | Description |
-|---------|-------------|
-| `show` | Show last 20 watched videos |
-| `show 50` | Show last 50 watched videos |
-| `search "keyword"` | Search your watch history |
-| `export json` | Export history to JSON file |
-| `export csv` | Export history to CSV file |
-| `check` | Verify cookies are valid |
-
-```bash
-python3 scripts/yt_history.py show
-python3 scripts/yt_history.py search "music"
-python3 scripts/yt_history.py export csv
-```
-
-Cookies are stored in `data/youtube-cookies.txt` and stay there until you delete them.
-
 ## For Python
 
 ```python
@@ -155,8 +117,6 @@ Install [youtube-webos](https://github.com/nicx/youtube-webos) for ad-free YouTu
 | No sound | TV screen may be off (energy saver). Send any SSAP command to wake |
 | DIAL port 36866 not responding | TV in deep sleep. Wake via WoL or SSAP first |
 | `ModuleNotFoundError: pyytlounge` | `pip install pyytlounge` |
-| "Cookies expired" | Re-export from EditThisCookie and re-import |
-| `ModuleNotFoundError: yt-dlp` | `pip install yt-dlp` (needed for history + search) |
 
 ## License
 
